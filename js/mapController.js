@@ -9,13 +9,13 @@ function onSearchLocation() {
 }
 
 renderLocations()
- function renderLocations(){
+function renderLocations() {
     var places = mapService.getGLlocations();
     console.log(places)
-    if(!places || places.length < 0 ) return;
-    var htmlStr = places.map( (place) => {
+    if (!places || places.length < 0) return;
+    var htmlStr = places.map((place) => {
         return `<li><span class="name-place">${place.name} </span><button class="btn-remove" onclick="onRemovePlace(${place.id})">x</button></li>`
-    } )
+    })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
 }
 
@@ -38,6 +38,7 @@ window.onload = () => {
         .catch(err => {
             console.log('err!!!', err);
         })
+    renderLocations();
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
@@ -103,8 +104,9 @@ function onClickMap(position) {
         infoWindow.open(gMap);
         console.log('NewPos:', infoWindow.position.toJSON());
         if (confirm('Do you want to save location?')) {
-            var locationName = prompt('What\'s the location\'s name?')
-            mapService.generateLocation(locationName, infoWindow.position.toJSON())
+            var locationName = prompt('What\'s the location\'s name?');
+            mapService.generateLocation(locationName, infoWindow.position.toJSON());
+            renderLocations();
         }
     });
 }
