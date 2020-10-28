@@ -65,47 +65,33 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
             onClickMap(gMap.center);
             console.log('Map!', gMap);
         })
-        
+
 }
 
 function onClickMap(position) {
-    // Create the initial InfoWindow.
     var clickedPos;
-  let infoWindow = new google.maps.InfoWindow({
-    content: "Click the map to get Lat/Lng!",
-    position: position,
-  });
-  infoWindow.open(gMap);
-  // Configure the click listener.
-  gMap.addListener("click", (mapsMouseEvent) => {
-    // Close the current InfoWindow.
-    infoWindow.close();
-    // Create a new InfoWindow.
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng
+    let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: position,
     });
-    infoWindow.setContent(
-      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-    );
     infoWindow.open(gMap);
-    console.log('NewPos:', infoWindow.position.toJSON());
-  });
+
+    gMap.addListener("click", (mapsMouseEvent) => {
+        infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+            position: mapsMouseEvent.latLng
+        });
+        infoWindow.setContent(
+            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+        );
+        infoWindow.open(gMap);
+        console.log('NewPos:', infoWindow.position.toJSON());
+        if (confirm('Do you want to save location?')) {
+            var locationName = prompt('What\'s the location\'s name?')
+            mapService.generateLocation(locationName, infoWindow.position.toJSON())
+        }
+    });
 }
-
-
-// export function initMap(lat = 32.0749831, lng = 34.9120554) {
-//     console.log('InitMap');
-//     return _connectGoogleApi()
-//         .then(() => {
-//             console.log('google available');
-//             gMap = new google.maps.Map(
-//                 document.querySelector('#map'), {
-//                 center: { lat, lng },
-//                 zoom: 15
-//             })
-//             console.log('Map!', gMap);
-//         })
-// }
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
