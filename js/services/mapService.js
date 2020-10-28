@@ -4,7 +4,8 @@ export const mapService = {
     generateLocation: generateLocation,
     getGLlocations: getGLlocations,
     searchLocation: searchLocation,
-    removePlace: removePlace
+    removePlace: removePlace,
+    moveToPlace: moveToPlace
 }
 var locs = []
 
@@ -18,6 +19,15 @@ window.gLocations = gLocations;
 function removePlace(idx) {
     var placeidx = gLocations.findIndex((currplace)=> currplace.id === idx);
     gLocations.splice(placeidx, 1);
+}
+
+function moveToPlace(idx){
+    var placeIdx = gLocations.findIndex((currplace)=> currplace.id === idx);
+    var location = gLocations[placeIdx];
+    return {
+        lat: location.lat,
+        lng: location.lng
+    }
 }
 
 function searchLocation(val) {
