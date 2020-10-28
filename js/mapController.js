@@ -36,13 +36,14 @@ function renderLocations() {
     console.log(places)
     if (!places || places.length < 0) return;
     var htmlStr = places.map((place) => {
-        return `<li><span class="name-place">${place.name}</span><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
+        return `<li><span class="name-place">${place.name}</span><button class="btn-go" data-id=${place.id}>Go</button><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
     })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
-    renderBtn()
+    onClickDeleteBtn()
+    onClickGoBtn()
 
 }
-function renderBtn() {
+function onClickDeleteBtn() {
     var btns = document.querySelectorAll('.btn-remove')
     Array.from(btns).forEach(btn => {
         btn.addEventListener('click', (ev) => {
@@ -50,11 +51,32 @@ function renderBtn() {
         })
     });
 }
+function onClickGoBtn() {
+    var btns = document.querySelectorAll('.btn-go')
+    Array.from(btns).forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            //    onRemovePlace(ev);
+            onMoveToPlace(ev)
+        })
+    });
+}
+function onMoveToPlace(ev) {
+    var el = ev.target;
+    var placeId = el.dataset.id;
+    // mapService.onMoveToPlace(placeId)
+    // var newMarker = new google.maps.Marker({
+    //     position: location,
+    //     map: map,
+    // });
+    // console.log(newMarker) 
+    var location = mapService.moveToPlace(placeId)
+    initMap(location.lat, location.lng);
+}
 
 function onRemovePlace(ev) {
     var el = ev.target;
     var placeId = el.dataset.id;
-    console.log('Aaaa', placeId);
+    // console.log('Aaaa', placeId);
     mapService.removePlace(placeId);
     mapService.saveLocations();
     renderLocations();
