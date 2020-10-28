@@ -4,9 +4,12 @@ export const mapService = {
     generateLocation: generateLocation,
     getGLlocations: getGLlocations
 }
-var locs = [{ lat: 11.22, lng: 22.11 }]
+var locs = []
 
-var gLocations = [{lat:100,lan:23}]
+var gLocations = []
+generateLocation('hadash',{ lat: 11.22, lng: 22.11 })
+
+
 window.gLocations = gLocations;
 
 function searchLocation(val) {
