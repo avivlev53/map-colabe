@@ -9,12 +9,8 @@ document.querySelector('.search-btn').addEventListener('click', (ev) => {
     onSearchLocation();
 });
 
-document.querySelectorAll('.btn-remove').forEach(btn => {
-    btn.addEventListener('click', (ev) => {
-        // onRemovePlace(ev);
-        console.log('hey');
-    })
-});
+
+
 
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
@@ -37,9 +33,17 @@ function renderLocations() {
         return `<li><span class="name-place">${place.name}</span><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
     })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
+    renderBtn()
+   
 }
-
-
+function renderBtn(){
+    var btns= document.querySelectorAll('.btn-remove')
+     Array.from(btns).forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            onRemovePlace(ev);
+        })
+    });
+}
 
 function onRemovePlace(ev) {
     var el = ev.target;
