@@ -10,7 +10,18 @@ document.querySelector('.search-btn').addEventListener('click', (ev) => {
 });
 
 
-
+function queryStr() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var lat = +urlParams.get('lat');
+    console.log(lat);
+    var lng = +urlParams.get('lng');
+    if(!urlParams.get('lat')) {
+        lat = 32.0749831;
+        lng = 34.9120554
+    }
+    initMap(lat, lng);
+}
 
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
@@ -82,21 +93,23 @@ mapService.getLocs()
     .then(locs => console.log('locs', locs))
 
 window.onload = () => {
-    initMap()
-        .then(() => {
-
-            addMarker({ lat: 32.0749831, lng: 34.9120554 });
-        })
-        .catch(console.log('INIT MAP ERROR'));
-
-    getPosition()
-        .then(pos => {
-
-            console.log('User position is:', pos.coords);
-        })
-        .catch(err => {
-            console.log('err!!!', err);
-        })
+    if (!queryStr()) {
+        initMap()
+            .then(() => {
+                addMarker({ lat: 32.0749831, lng: 34.9120554 });
+            })
+            .catch(console.log('INIT MAP ERROR'));
+    
+        getPosition()
+            .then(pos => {
+    
+                console.log('User position is:', pos.coords);
+            })
+            .catch(err => {
+                console.log('err!!!', err);
+            })
+    }
+    queryStr();
     renderLocations();
 }
 
