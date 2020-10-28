@@ -3,7 +3,7 @@ export const mapService = {
 }
 var locs = [{ lat: 11.22, lng: 22.11 }]
 
-var gLocations = []
+var gLocations = [];
 
 
 function getLocs() {
@@ -14,4 +14,6 @@ function getLocs() {
     });
 }
 
-
+function generateLocation(name, position) {
+    
+}
