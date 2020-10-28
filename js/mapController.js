@@ -13,11 +13,14 @@ document.querySelector('.search-btn').addEventListener('click', (ev) => {
 function queryStr() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const lat = +urlParams.get('lat');
+    var lat = +urlParams.get('lat');
     console.log(lat);
-    const lng = +urlParams.get('lng');
+    var lng = +urlParams.get('lng');
+    if(!lat) {
+        lat = 32.0749831;
+        lng = 34.9120554
+    }
     initMap(lat, lng);
-    return lat;
 }
 
 function onSearchLocation() {
