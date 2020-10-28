@@ -17,6 +17,7 @@ function queryStr() {
     console.log(lat);
     const lng = urlParams.get('lng');
     initMap(lat, lng);
+    return lat;
 }
 
 function onSearchLocation() {
@@ -89,23 +90,24 @@ mapService.getLocs()
     .then(locs => console.log('locs', locs))
 
 window.onload = () => {
-    initMap()
-        .then(() => {
-
-            addMarker({ lat: 32.0749831, lng: 34.9120554 });
-        })
-        .catch(console.log('INIT MAP ERROR'));
-
-    getPosition()
-        .then(pos => {
-
-            console.log('User position is:', pos.coords);
-        })
-        .catch(err => {
-            console.log('err!!!', err);
-        })
-    renderLocations();
+    if (!queryStr()) {
+        initMap()
+            .then(() => {
+                addMarker({ lat: 32.0749831, lng: 34.9120554 });
+            })
+            .catch(console.log('INIT MAP ERROR'));
+    
+        getPosition()
+            .then(pos => {
+    
+                console.log('User position is:', pos.coords);
+            })
+            .catch(err => {
+                console.log('err!!!', err);
+            })
+    }
     queryStr();
+    renderLocations();
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
