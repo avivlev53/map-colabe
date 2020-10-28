@@ -2,7 +2,8 @@ export const mapService = {
     getLocs: getLocs,
     saveLocations: saveLocations,
     generateLocation: generateLocation,
-    getGLlocations: getGLlocations
+    getGLlocations: getGLlocations,
+    searchLocation: searchLocation
 }
 var locs = []
 
@@ -14,15 +15,19 @@ generateLocation('puki',{ lat: 23.22, lng: 13.20 })
 window.gLocations = gLocations;
 
 function searchLocation(val) {
-    return fetch('')
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${val}&key=AIzaSyCs6vBR-47pkKtZnKO24hqOLwzAzyFXMqI`)
+        .then(res => res.json())
+        .then(resp => resp.results)
+        .then(results => results[0].geometry)
+        .then(ans => ans.location)
 }
 
 saveLocations()
-function saveLocations(){
+function saveLocations() {
     saveToStorage('usersLocationDB', gLocations)
 }
 
-function getGLlocations(){
+function getGLlocations() {
     return gLocations
 }
 

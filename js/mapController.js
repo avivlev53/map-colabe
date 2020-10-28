@@ -3,9 +3,22 @@ import { mapService } from './services/mapService.js'
 var gMap;
 console.log('Main!');
 
+
+document.querySelector('.search-btn').addEventListener('click', (ev) => {
+    ev.preventDefault();
+    onSearchLocation();
+})
+
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
-    searchLocation(elInput.value);
+    mapService.searchLocation(elInput.value)
+        .then(location => {
+            if (location) {
+                initMap(location.lat, location.lng);
+                mapService.generateLocation(elInput.value, location);
+                renderLocations();
+            }
+        })
 }
 
 renderLocations()
@@ -51,6 +64,7 @@ window.onload = () => {
         .catch(err => {
             console.log('err!!!', err);
         })
+    renderLocations();
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
@@ -116,8 +130,10 @@ function onClickMap(position) {
         infoWindow.open(gMap);
         console.log('NewPos:', infoWindow.position.toJSON());
         if (confirm('Do you want to save location?')) {
-            var locationName = prompt('What\'s the location\'s name?')
-            mapService.generateLocation(locationName, infoWindow.position.toJSON())
+            var locationName = prompt('What\'s the location\'s name?');
+            mapService.generateLocation(locationName, infoWindow.position.toJSON());
+            mapService.saveLocations();
+            renderLocations();
         }
     });
 }
