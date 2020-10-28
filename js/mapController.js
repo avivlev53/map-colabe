@@ -32,12 +32,13 @@ function renderLocations() {
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
 }
 function onRemovePlace(ev) {
+    console.log('Aaaa', ev);
     var el = ev.target
     var placeId = el.dataset.id
-    console.log('Aaaa', placeId);
     var places = mapService.getGLlocations();
     var placeidx = places.findIndex((currplace)=> currplace.id === placeId);
     places.splice(placeidx,1);
+    // console.log(places[placeId])
     mapService.saveLocations()
     renderLocations()
 }
