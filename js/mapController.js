@@ -2,7 +2,15 @@ import { mapService } from './services/mapService.js'
 
 var gMap;
 console.log('Main!');
-
+renderLocations()
+ function renderLocations(){
+    var places = locations;
+    if(!places || places.length < 0 ) return;
+    var htmlStr = places.map( (place) => {
+        return `<li><span class="name-place">${place.name} </span><button class="btn-remove" onclick="onRemovePlace(${place.id})">x</button></li>`
+    } )
+    document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
+}
 
 mapService.getLocs()
     .then(locs => console.log('locs', locs))
@@ -54,6 +62,7 @@ function positionMe(location) {
 
 export function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
+
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
