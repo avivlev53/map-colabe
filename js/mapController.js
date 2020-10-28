@@ -16,7 +16,7 @@ function queryStr() {
     var lat = +urlParams.get('lat');
     console.log(lat);
     var lng = +urlParams.get('lng');
-    if(!lat) {
+    if(!urlParams.get('lat')) {
         lat = 32.0749831;
         lng = 34.9120554
     }
