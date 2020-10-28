@@ -10,7 +10,13 @@ document.querySelector('.search-btn').addEventListener('click', (ev) => {
 });
 
 
-
+function queryStr() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const lat = urlParams.get('lat')
+    console.log(lat);
+    // const color = urlParams.get('color')
+}
 
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
@@ -34,11 +40,11 @@ function renderLocations() {
     })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
     renderBtn()
-   
+
 }
-function renderBtn(){
-    var btns= document.querySelectorAll('.btn-remove')
-     Array.from(btns).forEach(btn => {
+function renderBtn() {
+    var btns = document.querySelectorAll('.btn-remove')
+    Array.from(btns).forEach(btn => {
         btn.addEventListener('click', (ev) => {
             onRemovePlace(ev);
         })
@@ -76,6 +82,7 @@ window.onload = () => {
             console.log('err!!!', err);
         })
     renderLocations();
+    queryStr();
 }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
