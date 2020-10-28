@@ -2,12 +2,17 @@ export const mapService = {
     getLocs: getLocs,
     saveLocations: saveLocations,
     generateLocation: generateLocation,
-    getGLlocations:getGLlocations
+    getGLlocations: getGLlocations
 }
 var locs = [{ lat: 11.22, lng: 22.11 }]
 
 var gLocations = [{lat:100,lan:23}]
 window.gLocations = gLocations;
+
+function searchLocation(val) {
+    return fetch('')
+}
+
 saveLocations()
 function saveLocations(){
     saveToStorage('usersLocationDB', gLocations)

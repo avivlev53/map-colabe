@@ -2,6 +2,12 @@ import { mapService } from './services/mapService.js'
 
 var gMap;
 console.log('Main!');
+
+function onSearchLocation() {
+    const elInput = document.querySelector('.search-input');
+    searchLocation(elInput.value);
+}
+
 renderLocations()
  function renderLocations(){
     var places = getGLlocations;
