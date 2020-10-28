@@ -7,7 +7,14 @@ console.log('Main!');
 document.querySelector('.search-btn').addEventListener('click', (ev) => {
     ev.preventDefault();
     onSearchLocation();
-})
+});
+
+document.querySelectorAll('.btn-remove').forEach(btn => {
+    btn.addEventListener('click', (ev) => {
+        // onRemovePlace(ev);
+        console.log('hey');
+    })
+});
 
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
@@ -27,22 +34,21 @@ function renderLocations() {
     console.log(places)
     if (!places || places.length < 0) return;
     var htmlStr = places.map((place) => {
-        return `<li><span class="name-place">${place.name} </span><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
+        return `<li><span class="name-place">${place.name}</span><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
     })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
 }
+
+
+
 function onRemovePlace(ev) {
-    console.log('Aaaa', ev);
-    var el = ev.target
-    var placeId = el.dataset.id
-    var places = mapService.getGLlocations();
-    var placeidx = places.findIndex((currplace)=> currplace.id === placeId);
-    places.splice(placeidx,1);
-    // console.log(places[placeId])
-    mapService.saveLocations()
-    renderLocations()
+    var el = ev.target;
+    var placeId = el.dataset.id;
+    console.log('Aaaa', placeId);
+    mapService.removePlace(placeId);
+    mapService.saveLocations();
+    renderLocations();
 }
-document.querySelector('.btn-remove').addEventListener('click', onRemovePlace)
 
 
 

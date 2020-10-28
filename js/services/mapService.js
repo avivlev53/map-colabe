@@ -3,7 +3,8 @@ export const mapService = {
     saveLocations: saveLocations,
     generateLocation: generateLocation,
     getGLlocations: getGLlocations,
-    searchLocation: searchLocation
+    searchLocation: searchLocation,
+    removePlace: removePlace
 }
 var locs = []
 
@@ -13,6 +14,11 @@ generateLocation('baba',{ lat: 7.22, lng: 27.292 })
 generateLocation('puki',{ lat: 23.22, lng: 13.20 })
 
 window.gLocations = gLocations;
+
+function removePlace(idx) {
+    var placeidx = gLocations.findIndex((currplace)=> currplace.id === idx);
+    gLocations.splice(placeidx, 1);
+}
 
 function searchLocation(val) {
     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${val}&key=AIzaSyCs6vBR-47pkKtZnKO24hqOLwzAzyFXMqI`)
