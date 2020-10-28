@@ -13,9 +13,10 @@ document.querySelector('.search-btn').addEventListener('click', (ev) => {
 function queryStr() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const lat = urlParams.get('lat')
+    const lat = urlParams.get('lat');
     console.log(lat);
-    // const color = urlParams.get('color')
+    const lng = urlParams.get('lng');
+    initMap(lat, lng);
 }
 
 function onSearchLocation() {
