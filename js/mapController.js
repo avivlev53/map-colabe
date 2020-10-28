@@ -4,7 +4,8 @@ var gMap;
 console.log('Main!');
 renderLocations()
  function renderLocations(){
-    var places = getGLlocations;
+    var places = mapService.getGLlocations();
+    console.log(places)
     if(!places || places.length < 0 ) return;
     var htmlStr = places.map( (place) => {
         return `<li><span class="name-place">${place.name} </span><button class="btn-remove" onclick="onRemovePlace(${place.id})">x</button></li>`
