@@ -8,7 +8,8 @@ var locs = []
 
 var gLocations = []
 generateLocation('hadash',{ lat: 11.22, lng: 22.11 })
-
+generateLocation('baba',{ lat: 7.22, lng: 27.292 })
+generateLocation('puki',{ lat: 23.22, lng: 13.20 })
 
 window.gLocations = gLocations;
 

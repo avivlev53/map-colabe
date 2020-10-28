@@ -9,15 +9,28 @@ function onSearchLocation() {
 }
 
 renderLocations()
- function renderLocations(){
+function renderLocations() {
     var places = mapService.getGLlocations();
     console.log(places)
-    if(!places || places.length < 0 ) return;
-    var htmlStr = places.map( (place) => {
-        return `<li><span class="name-place">${place.name} </span><button class="btn-remove" onclick="onRemovePlace(${place.id})">x</button></li>`
-    } )
+    if (!places || places.length < 0) return;
+    var htmlStr = places.map((place) => {
+        return `<li><span class="name-place">${place.name} </span><button class="btn-remove" data-id=${place.id}>Delete</button></li>`
+    })
     document.querySelector('.locations-list ul').innerHTML = htmlStr.join('');
 }
+function onRemovePlace(ev) {
+    var el = ev.target
+    var placeId = el.dataset.id
+    console.log('Aaaa', placeId);
+    var places = mapService.getGLlocations();
+    var placeidx = places.findIndex((currplace)=> currplace.id === placeId);
+    places.splice(placeidx,1);
+    mapService.saveLocations()
+    renderLocations()
+}
+document.querySelector('.btn-remove').addEventListener('click', onRemovePlace)
+
+
 
 mapService.getLocs()
     .then(locs => console.log('locs', locs))
