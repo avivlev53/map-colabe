@@ -3,9 +3,22 @@ import { mapService } from './services/mapService.js'
 var gMap;
 console.log('Main!');
 
+
+document.querySelector('.search-btn').addEventListener('click', (ev) => {
+    ev.preventDefault();
+    onSearchLocation();
+})
+
 function onSearchLocation() {
     const elInput = document.querySelector('.search-input');
-    searchLocation(elInput.value);
+    mapService.searchLocation(elInput.value)
+        .then(location => {
+            if (location) {
+                initMap(location.lat, location.lng);
+                mapService.generateLocation(elInput.value, location);
+                renderLocations();
+            }
+        })
 }
 
 renderLocations()
